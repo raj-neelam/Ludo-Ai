@@ -7,11 +7,33 @@ class LudoRenderer:
         pg.display.set_caption("Ludo AI")
         self.clock = pg.time.Clock()
         self.board_image = pg.image.load("board.png")  # Ensure you have a board.png file
+        self.center_of_board = (0,0)
 
     def draw_board(self):
-        self.screen.fill((255, 255, 255))
-        board_rect = self.board_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
-        self.screen.blit(self.board_image, board_rect)
+        self.screen.fill("black")
+        screen_width, screen_height = self.screen.get_size()
+        image_width, image_height = self.board_image.get_size()
+        
+        # Calculate the aspect ratio
+        aspect_ratio = image_width / image_height
+        
+        # Determine new dimensions while maintaining aspect ratio
+        if screen_width / screen_height > aspect_ratio:
+            new_height = screen_height
+            new_width = int(new_height * aspect_ratio)
+        else:
+            new_width = screen_width
+            new_height = int(new_width / aspect_ratio)
+        
+        # Scale the image to the new dimensions
+        scaled_board_image = pg.transform.scale(self.board_image, (new_width, new_height))
+        board_rect = scaled_board_image.get_rect(center=(screen_width // 2, screen_height // 2))
+        
+        # Blit the scaled image onto the screen
+        self.screen.blit(scaled_board_image, board_rect)
+        
+        # setting the center of the board
+        self.center_of_board = board_rect.center
 
     def render(self):
         running = True
