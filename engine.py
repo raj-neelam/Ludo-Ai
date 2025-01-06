@@ -1,7 +1,8 @@
 import random
 
 class LudoPiece:
-    def __init__(self, start_position):
+    def __init__(self, start_position, Pid):
+        self.Pid = Pid
         self.position = start_position
         self.distance_from_goal = self.calculate_distance_from_goal()
 
@@ -12,9 +13,6 @@ class LudoPiece:
         elif 1 <= self.position <= 56:
             # Piece is on the track
             return 58 - self.position
-        elif self.position == 58:
-            # Piece has reached the goal
-            return 0
         else:
             raise ValueError("Invalid position")
 
@@ -27,7 +25,7 @@ class LudoPiece:
 class Player:
     def __init__(self, player_number):
         self.player_number = player_number
-        self.pieces = [LudoPiece(0) for _ in range(4)]
+        self.pieces = [LudoPiece(0, i) for i in range(4)]
 
     def move_piece(self, piece_index, steps):
         if 0 <= piece_index < len(self.pieces):
@@ -36,8 +34,8 @@ class Player:
             raise IndexError("Invalid piece index")
 
 class LudoEngine:
-    def __init__(self):
-        self.players = [Player(i) for i in range(4)]
+    def __init__(self, n_players=4): # n players can only be 2, 3, 4
+        self.players = [Player(i) for i in range(n_players)]
         self.current_turn = 0
 
     def roll_dice(self):
@@ -50,15 +48,3 @@ class LudoEngine:
 
     def next_turn(self):
         self.current_turn = (self.current_turn + 1) % 4
-
-    def get_board_state(self):
-        board_state = {}
-        for player in self.players:
-            board_state[player.player_number] = [piece.position for piece in player.pieces]
-        return board_state
-
-    def get_engine_state(self):
-        return {
-            "current_turn": self.current_turn,
-            "board_state": self.get_board_state()
-        }
