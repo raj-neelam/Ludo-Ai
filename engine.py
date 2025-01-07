@@ -20,7 +20,7 @@ class LudoPiece:
         self.position += steps
         if self.position > 58:
             self.position = 58  # Ensure the position does not exceed the goal
-        self.distance_from_goal = self.calculate_distance_from_goal()
+        # self.distance_from_goal = self.calculate_distance_from_goal()
 
 class Player:
     def __init__(self, player_number):
@@ -48,3 +48,11 @@ class LudoEngine:
 
     def next_turn(self):
         self.current_turn = (self.current_turn + 1) % 4
+    
+    def step(self):
+        self.move_current_player_piece(random.randint(0, 3), 1)
+        for player in self.players:
+            for pice in player.pieces:
+                if pice.position==57:
+                    return True
+        return False

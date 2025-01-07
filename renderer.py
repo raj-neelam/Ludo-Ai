@@ -82,7 +82,84 @@ class LudoRenderer:
             elif pice.Pid==2:return pos+np.array([-0.75, 0.19])
             elif pice.Pid==3:return pos+np.array([-0.75, -0.25])
         elif pice.position==1:return pos+np.array([-0.21, 0.3])
-        return pos
+        elif pice.position==2:return pos+np.array([-0.21, 0.07])
+        elif pice.position==3:return pos+np.array([-0.21, -0.15])
+        elif pice.position==4:return pos+np.array([-0.21, -0.35])
+        elif pice.position==5:return pos+np.array([-0.21, -0.55])
+
+
+        elif pice.position==6:return pos+np.array([-0.41, -0.76])
+        elif pice.position==7:return pos+np.array([-0.62, -0.76])
+        elif pice.position==8:return pos+np.array([-0.83, -0.76])
+        elif pice.position==9:return pos+np.array([-1.04, -0.76])
+        elif pice.position==10:return pos+np.array([-1.26, -0.76])
+
+        elif pice.position==11:return pos+np.array([-1.48, -0.76])
+        elif pice.position==12:return pos+np.array([-1.48, -0.98])
+        elif pice.position==13:return pos+np.array([-1.48, -1.21])
+
+        elif pice.position==14:return pos+np.array([-1.26, -1.21])
+        elif pice.position==15:return pos+np.array([-1.04, -1.21])
+        elif pice.position==16:return pos+np.array([-0.83, -1.21])
+        elif pice.position==17:return pos+np.array([-0.62, -1.21])
+        elif pice.position==18:return pos+np.array([-0.41, -1.21])
+
+
+        elif pice.position==19:return pos+np.array([-0.21, -1.43])
+        elif pice.position==20:return pos+np.array([-0.21, -1.64])
+        elif pice.position==21:return pos+np.array([-0.21, -1.85])
+        elif pice.position==22:return pos+np.array([-0.21, -2.06])
+        elif pice.position==23:return pos+np.array([-0.21, -2.27])
+
+        elif pice.position==24:return pos+np.array([-0.21, -2.48])
+        elif pice.position==25:return pos+np.array([-0, -2.48])
+        elif pice.position==26:return pos+np.array([0.21, -2.48])
+
+        elif pice.position==27:return pos+np.array([0.21, -2.27])
+        elif pice.position==28:return pos+np.array([0.21, -2.06])
+        elif pice.position==29:return pos+np.array([0.21, -1.85])
+        elif pice.position==30:return pos+np.array([0.21, -1.64])
+        elif pice.position==31:return pos+np.array([0.21, -1.43])
+
+
+        elif pice.position==32:return pos+np.array([0.42, -1.21])
+        elif pice.position==33:return pos+np.array([0.63, -1.21])
+        elif pice.position==34:return pos+np.array([0.84, -1.21])
+        elif pice.position==35:return pos+np.array([1.05, -1.21])
+        elif pice.position==36:return pos+np.array([1.27, -1.21])
+
+        elif pice.position==37:return pos+np.array([1.48, -1.21])
+        elif pice.position==38:return pos+np.array([1.48, -0.98])
+        elif pice.position==39:return pos+np.array([1.48, -0.76])
+
+        elif pice.position==40:return pos+np.array([1.27, -0.76])
+        elif pice.position==41:return pos+np.array([1.05, -0.76])
+        elif pice.position==42:return pos+np.array([0.84, -0.76])
+        elif pice.position==43:return pos+np.array([0.63, -0.76])
+        elif pice.position==44:return pos+np.array([0.42, -0.76])
+
+
+        elif pice.position==45:return pos+np.array([0.22, -0.55])
+        elif pice.position==46:return pos+np.array([0.22, -0.35])
+        elif pice.position==47:return pos+np.array([0.22, -0.15])
+        elif pice.position==48:return pos+np.array([0.22, 0.07])
+        elif pice.position==49:return pos+np.array([0.22, 0.3])
+
+        elif pice.position==50:return pos+np.array([0.22, 0.5])
+        elif pice.position==51:return pos+np.array([0, 0.5])
+
+        elif pice.position==52:return pos+np.array([0, 0.3])
+        elif pice.position==53:return pos+np.array([0, 0.07])
+        elif pice.position==54:return pos+np.array([0, -0.15])
+        elif pice.position==55:return pos+np.array([0, -0.35])
+        elif pice.position==56:return pos+np.array([0, -0.55])
+
+        elif pice.position==57:return pos+np.array([0, -0.79])
+
+        else:
+            print("error Position :",  pice.position)
+            return pos
+        
     def render(self, engine):
         running = True
         while running:
@@ -98,3 +175,14 @@ class LudoRenderer:
             self.clock.tick(30)
 
         pg.quit()
+    
+    def update(self, engine):
+        for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    running = False
+                elif event.type == pg.VIDEORESIZE:
+                    self.screen = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
+        self.draw_board()
+        self.draw_player(engine)
+        pg.display.flip()
+        self.clock.tick(30)
